@@ -19,11 +19,17 @@ router.get('/', async (req, res) => {
         );
         const photos = photosResponse.data.map(photo => ({ url: photo.url }));
 
+        const user = await fetchUserById(post.userId);
+
         return [
           ...acc,
           {
             ...post,
             images: photos,
+            user: {
+              name: user.name,
+              email: user.email,
+            },
           },
         ];
       } catch (error) {
