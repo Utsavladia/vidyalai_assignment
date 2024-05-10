@@ -7,7 +7,8 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const posts = await fetchPosts();
+    const { start = 0, limit = 10 } = req.query;
+    const posts = await fetchPosts({ start, limit });
 
     const postsWithImages = await posts.reduce(async (accPromise, post) => {
       const acc = await accPromise;
